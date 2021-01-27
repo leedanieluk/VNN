@@ -9,8 +9,8 @@ import java.util.Arrays;
  */
 public class VNN {
     private final int layers;
-    private Matrix[] wMatrices;
-    private Vector[] bVectors;
+    private final Matrix[] wMatrices;
+    private final Vector[] bVectors;
     private final Vector[] zVectors;
     private final Vector[] aVectors;
     private final Vector[] dVectors;
@@ -149,16 +149,8 @@ public class VNN {
         return wMatrices;
     }
 
-    public void setWMatrices(Matrix[] wMatrices) {
-        this.wMatrices = wMatrices;
-    }
-
     public Vector[] getBVectors() {
         return bVectors;
-    }
-
-    public void setBVectors(Vector[] bVectors) {
-        this.bVectors = bVectors;
     }
 
     public Vector[] getZVectors() {
