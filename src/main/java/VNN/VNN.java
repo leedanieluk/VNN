@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 /**
  * Vectorized Neural Network
+ *
+ * Equations based on: http://neuralnetworksanddeeplearning.com/chap2.html
  */
 public class VNN {
     private final int layers;
