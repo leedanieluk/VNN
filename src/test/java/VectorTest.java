@@ -55,4 +55,19 @@ public class VectorTest {
         Assert.assertEquals(4, (int) result.getValues()[2][1]);
         Assert.assertEquals(6, (int) result.getValues()[2][2]);
     }
+
+    @Test
+    public void vectorMultiplicationNonSquare() {
+        float[] vectorValues = {3, -1, 2};
+        Vector vector = new Vector(vectorValues);
+        float[] vectorValues2 = {0, 2};
+        Vector vector2 = new Vector(vectorValues2);
+        Matrix result = vector.multiply(vector2);
+        Assert.assertEquals(0, (int) result.getValues()[0][0]);
+        Assert.assertEquals(6, (int) result.getValues()[0][1]);
+        Assert.assertEquals(0, (int) result.getValues()[1][0]);
+        Assert.assertEquals(-2, (int) result.getValues()[1][1]);
+        Assert.assertEquals(0, (int) result.getValues()[2][0]);
+        Assert.assertEquals(4, (int) result.getValues()[2][1]);
+    }
 }

@@ -14,7 +14,7 @@ public class Vector {
         float[] inputValues = vector.getValues();
         float[][] outputValues = new float[this.values.length][inputValues.length];
         for(int row = 0; row < this.values.length; row++) {
-            for(int col = 0; col < this.values.length; col++) {
+            for(int col = 0; col < inputValues.length; col++) {
                 outputValues[row][col] = this.values[row] * inputValues[col];
             }
         }
@@ -59,7 +59,6 @@ public class Vector {
         }
         return sum;
     }
-
 
     public Vector applyElementWise(Function<Vector, Vector> function) {
         return function.apply(this);

@@ -1,28 +1,34 @@
+import TrainingData.TrainingData;
 import VNN.VNN;
 import VNN.Vector;
 import VNN.Matrix;
+import com.opencsv.exceptions.CsvException;
+
+import java.io.IOException;
 
 public class App {
-    public static void main(String[] args) {
-        VNN vnn = new VNN(2, 2, 2);
-        float[][] weightValuesLayer1 = {{0.15f, 0.20f}, {0.25f, 0.30f}};
-        float[][] weightValuesLayer2 = {{0.40f,0.45f}, {0.50f, 0.55f}};
-        Matrix[] weightsMatrix = {new Matrix(weightValuesLayer1), new Matrix(weightValuesLayer2)};
-        vnn.setWMatrices(weightsMatrix);
-        float[] biasVectorLayer1 = {0.35f, 0.35f};
-        float[] biasVectorLayer2 = {0.60f, 0.60f};
-        Vector[] biasVectors = {new Vector(biasVectorLayer1), new Vector(biasVectorLayer2)};
-        vnn.setBVectors(biasVectors);
-
-        float[] singleInput = {0.05f, 0.1f};
-        float[] singleTarget = {0.01f, 0.99f};
-        Vector input = new Vector(singleInput);
-        Vector target = new Vector(singleTarget);
-        Vector[] inputs = {input};
-        Vector[] targets = {target};
+    public static void main(String[] args) throws IOException, CsvException {
+        VNN vnn = new VNN(4, 10, 3);
+        Vector[] inputs = TrainingData.getInputs();
+        Vector[] targets = TrainingData.getTargets();
 
         vnn.train(inputs, targets, 1, 10000,  0.5f);
         System.out.println(vnn);
-        System.out.println(vnn.predict(input));
+        System.out.println("Inputs\n");
+        System.out.println(vnn.predict(inputs[0]));
+        System.out.println(vnn.predict(inputs[1]));
+        System.out.println(vnn.predict(inputs[2]));
+        System.out.println(vnn.predict(inputs[3]));
+        System.out.println("Targets\n");
+        System.out.println(targets[0]);
+        System.out.println(targets[1]);
+        System.out.println(targets[2]);
+        System.out.println(targets[3]);
+    }
+
+    private static Vector generateVector(float... values) {
+        float[] vectorValues = new float[values.length];
+        System.arraycopy(values, 0, vectorValues, 0, values.length);
+        return new Vector(vectorValues);
     }
 }
