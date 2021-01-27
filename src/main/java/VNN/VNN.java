@@ -88,7 +88,7 @@ public class VNN {
         }
     }
 
-    public void updateWeightsAndBiases(Vector[] inputs, float learningRate) {
+    private void updateWeightsAndBiases(Vector[] inputs, float learningRate) {
         for(int layer = 0; layer < layers; layer++) {
             Matrix dwMatrix = buildMatrix(wMatrices[layer].getValues().length, wMatrices[layer].getValues()[0].length);
             Vector dbVector = buildVector(bVectors[layer].getValues().length);
