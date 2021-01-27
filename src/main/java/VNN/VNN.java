@@ -53,7 +53,7 @@ public class VNN {
                 batchError += calculateError(prediction, targets[input]);
             }
             updateWeightsAndBiases(inputs, learningRate);
-            System.out.printf("Iteration %d - Error %f\n", iteration, batchError);
+            System.out.printf("Iteration %d - Error %f\n", iteration + 1, batchError);
         }
     }
 
@@ -173,13 +173,6 @@ public class VNN {
                 "layers=" + layers +
                 ",\nwMatrices=" + Arrays.deepToString(wMatrices) +
                 ",\nbVectors=" + Arrays.toString(bVectors) +
-                ",\nzVectors=" + Arrays.toString(zVectors) +
-                ",\naVectors=" + Arrays.toString(aVectors) +
-                ",\ndVectors=" + Arrays.toString(dVectors) +
-                ",\ndVectorsCache=" + Arrays.deepToString(dVectorsCache) +
-                ",\naVectorsCache=" + Arrays.deepToString(aVectorsCache) +
-                ",\ninputNumber=" + inputNumber +
-                ",\ninputSize=" + inputSize +
                 '}';
     }
 }
