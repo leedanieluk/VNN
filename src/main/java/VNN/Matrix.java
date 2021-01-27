@@ -58,6 +58,26 @@ public class Matrix {
         return result;
     }
 
+    public static Matrix buildRandomMatrix(int rows, int columns) {
+        float[][] values = new float[rows][columns];
+        for(int row = 0; row < rows; row++) {
+            for(int column = 0; column < columns; column++) {
+                values[row][column] = (float) Math.random();
+            }
+        }
+        return new Matrix(values);
+    }
+
+    public static Matrix buildMatrix(int rows, int columns) {
+        float[][] values = new float[rows][columns];
+        for(int row = 0; row < rows; row++) {
+            for(int column = 0; column < columns; column++) {
+                values[row][column] = 0f;
+            }
+        }
+        return new Matrix(values);
+    }
+
     @Override
     public String toString() {
         return "Matrix{" +

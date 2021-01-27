@@ -64,6 +64,14 @@ public class Vector {
         return function.apply(this);
     }
 
+    public static Vector buildVector(int values) {
+        float[] vector = new float[values];
+        for(int value = 0; value < values; value++) {
+            vector[value] = 0f;
+        }
+        return new Vector(vector);
+    }
+
     public float[] getValues() {
         return values;
     }

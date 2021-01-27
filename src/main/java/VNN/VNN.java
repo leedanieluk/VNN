@@ -2,6 +2,10 @@ package VNN;
 
 import java.util.Arrays;
 
+import static VNN.Matrix.buildMatrix;
+import static VNN.Matrix.buildRandomMatrix;
+import static VNN.Vector.buildVector;
+
 /**
  * Vectorized Neural Network
  *
@@ -99,34 +103,6 @@ public class VNN {
             wMatrices[layer].subtract(dwMatrix.scalar(learningRate / inputSize));
             bVectors[layer].subtract(dbVector.scalar(learningRate / inputSize));
         }
-    }
-
-    private Matrix buildRandomMatrix(int rows, int columns) {
-        float[][] values = new float[rows][columns];
-        for(int row = 0; row < rows; row++) {
-            for(int column = 0; column < columns; column++) {
-                values[row][column] = (float) Math.random();
-            }
-        }
-        return new Matrix(values);
-    }
-
-    private Matrix buildMatrix(int rows, int columns) {
-        float[][] values = new float[rows][columns];
-        for(int row = 0; row < rows; row++) {
-            for(int column = 0; column < columns; column++) {
-                values[row][column] = 0f;
-            }
-        }
-        return new Matrix(values);
-    }
-
-    private Vector buildVector(int values) {
-        float[] vector = new float[values];
-        for(int value = 0; value < values; value++) {
-            vector[value] = 0f;
-        }
-        return new Vector(vector);
     }
 
     private float calculateError(Vector prediction, Vector target) {
