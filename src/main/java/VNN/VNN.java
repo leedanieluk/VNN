@@ -12,7 +12,8 @@ import static VNN.Vector.buildVector;
  * Equations based on: http://neuralnetworksanddeeplearning.com/chap2.html
  */
 public class VNN {
-    private final int layers;
+    private final int layersSize;
+    private final int[] layers;
     private final Matrix[] wMatrices;
     private final Vector[] bVectors;
     private final Vector[] zVectors;
@@ -24,7 +25,7 @@ public class VNN {
     private int inputSize;
 
     public VNN(int inputs, int... layers) {
-        validateInputs(inputs, layers);
+        validateVNNInputs(inputs, layers);
         Matrix[] wMatrices = new Matrix[layers.length];
         Vector[] bVectors = new Vector[layers.length];
         Vector[] zVectors = new Vector[layers.length];
@@ -38,7 +39,8 @@ public class VNN {
             aVectors[layer] = buildVector(layers[layer]);
             dVectors[layer] = buildVector(layers[layer]);
         }
-        this.layers = layers.length;
+        this.layersSize = layers.length;
+        this.layers = layers;
         this.wMatrices = wMatrices;
         this.bVectors = bVectors;
         this.zVectors = zVectors;
@@ -47,8 +49,9 @@ public class VNN {
     }
 
     public void train(Vector[] inputs, Vector[] targets, int batchSize, int iterations, float learningRate) {
-        this.dVectorsCache = new Vector[inputs.length][layers];
-        this.aVectorsCache = new Vector[inputs.length][layers];
+        validateTrainingInputs(targets);
+        this.dVectorsCache = new Vector[inputs.length][layersSize];
+        this.aVectorsCache = new Vector[inputs.length][layersSize];
         this.inputSize = inputs.length;
         for(int iteration = 0; iteration < iterations; iteration++) {
             float batchError = 0;
@@ -68,7 +71,7 @@ public class VNN {
     }
 
     private Vector feedForward(Vector inputs) {
-        for(int layer = 0; layer < layers; layer++) {
+        for(int layer = 0; layer < layersSize; layer++) {
             Matrix wMatrix = wMatrices[layer];
             Vector input = layer > 0 ? aVectors[layer - 1] : inputs;
             Vector zVector = wMatrix.multiply(input).add(bVectors[layer]);
@@ -76,12 +79,12 @@ public class VNN {
             aVectors[layer] = zVector.applyElementWise(ActivationFunctions::sigmoid);
             aVectorsCache[inputNumber][layer] = new Vector(aVectors[layer].getValues().clone());
         }
-        return aVectors[layers - 1];
+        return aVectors[layersSize - 1];
     }
 
     private void backPropagation(Vector target) {
-        for(int layer = layers - 1; layer >= 0; layer--) {
-            dVectors[layer] = layer < layers - 1 ?
+        for(int layer = layersSize - 1; layer >= 0; layer--) {
+            dVectors[layer] = layer < layersSize - 1 ?
                     (wMatrices[layer + 1].transpose().multiply(dVectors[layer + 1])).hadamard(zVectors[layer].applyElementWise(ActivationFunctions::sigmoidDerivative)) :
                     (new Vector(aVectors[layer].getValues().clone()).subtract(target)).hadamard(zVectors[layer].applyElementWise(ActivationFunctions::sigmoidDerivative));
             dVectorsCache[inputNumber][layer] = dVectors[layer];
@@ -89,7 +92,7 @@ public class VNN {
     }
 
     private void updateWeightsAndBiases(Vector[] inputs, float learningRate) {
-        for(int layer = 0; layer < layers; layer++) {
+        for(int layer = 0; layer < layersSize; layer++) {
             Matrix dwMatrix = buildMatrix(wMatrices[layer].getValues().length, wMatrices[layer].getValues()[0].length);
             Vector dbVector = buildVector(bVectors[layer].getValues().length);
             for (int input = 0; input < inputs.length; input++) {
@@ -111,13 +114,18 @@ public class VNN {
         return 0.5f * (float) Math.pow(result.sumOfElements(), 2);
     }
 
-    private void validateInputs(int inputs, int... layers) {
+    private void validateVNNInputs(int inputs, int... layers) {
         if(inputs < 1) {
             throw new IllegalArgumentException("Input size should be bigger than 0.");
         }
-
         if(layers.length < 1) {
             throw new IllegalArgumentException("Layers size should be bigger than 1");
+        }
+    }
+
+    private void validateTrainingInputs(Vector[] targets) {
+        if(targets[0].getValues().length != layers[layersSize - 1]) {
+            throw new IllegalArgumentException("Output size should match final layer size.");
         }
     }
 
@@ -140,7 +148,7 @@ public class VNN {
     @Override
     public String toString() {
         return "VNN{" +
-                "layers=" + layers +
+                "layersSize=" + layersSize +
                 ",\nwMatrices=" + Arrays.deepToString(wMatrices) +
                 ",\nbVectors=" + Arrays.toString(bVectors) +
                 '}';
