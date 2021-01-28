@@ -76,6 +76,10 @@ public class Vector {
         return values;
     }
 
+    public Vector copy() {
+        return new Vector(values.clone());
+    }
+
     @Override
     public String toString() {
         return "Vector{" +

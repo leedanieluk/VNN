@@ -79,7 +79,7 @@ public class VNN {
             Vector zVector = wMatrix.multiply(input).add(bVectors[layer]);
             zVectors[layer] = zVector;
             aVectors[layer] = zVector.applyElementWise(ActivationFunctions::sigmoid);
-            aVectorsCache[inputNumber][layer] = new Vector(aVectors[layer].getValues().clone());
+            aVectorsCache[inputNumber][layer] = aVectors[layer].copy();
         }
         return aVectors[layersSize - 1];
     }
@@ -88,7 +88,7 @@ public class VNN {
         for(int layer = layersSize - 1; layer >= 0; layer--) {
             dVectors[layer] = layer < layersSize - 1 ?
                     (wMatrices[layer + 1].transpose().multiply(dVectors[layer + 1])).hadamard(zVectors[layer].applyElementWise(ActivationFunctions::sigmoidDerivative)) :
-                    (new Vector(aVectors[layer].getValues().clone()).subtract(target)).hadamard(zVectors[layer].applyElementWise(ActivationFunctions::sigmoidDerivative));
+                    (aVectors[layer].copy().subtract(target)).hadamard(zVectors[layer].applyElementWise(ActivationFunctions::sigmoidDerivative));
             dVectorsCache[inputNumber][layer] = dVectors[layer];
         }
     }
@@ -111,7 +111,7 @@ public class VNN {
     }
 
     private float calculateError(Vector prediction, Vector target) {
-        Vector predictionClone = new Vector(prediction.getValues().clone());
+        Vector predictionClone = prediction.copy();
         Vector result = predictionClone.subtract(target);
         return 0.5f * (float) Math.pow(result.sumOfElements(), 2);
     }
