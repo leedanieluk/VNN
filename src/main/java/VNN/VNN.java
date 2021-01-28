@@ -87,8 +87,8 @@ public class VNN {
     private void backPropagation(Vector target) {
         for(int layer = layersSize - 1; layer >= 0; layer--) {
             dVectors[layer] = layer < layersSize - 1 ?
-                    (wMatrices[layer + 1].transpose().multiply(dVectors[layer + 1])).hadamard(zVectors[layer].applyElementWise(ActivationFunctions::sigmoidDerivative)) :
-                    (aVectors[layer].copy().subtract(target)).hadamard(zVectors[layer].applyElementWise(ActivationFunctions::sigmoidDerivative));
+                    (wMatrices[layer + 1].transpose().multiply(dVectors[layer + 1])).hadamard(zVectors[layer].copy().applyElementWise(ActivationFunctions::sigmoidDerivative)) :
+                    (aVectors[layer].copy().subtract(target)).hadamard(zVectors[layer].copy().applyElementWise(ActivationFunctions::sigmoidDerivative));
             dVectorsCache[inputNumber][layer] = dVectors[layer];
         }
     }
