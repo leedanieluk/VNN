@@ -14,6 +14,96 @@ public class TrainingData {
         getInputs();
     }
 
+    public static Vector[] getTrainingSet() throws IOException, CsvException {
+        Vector[] inputs;
+        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/NeuralNetwork/src/main/java/dataset/iris.csv"))) {
+            List<String[]> dataSet = reader.readAll();
+            inputs = new Vector[100];
+            for(int dataRow = 0; dataRow < 100; dataRow++) {
+                float[] input = new float[4];
+                String[] row = dataSet.get(dataRow);
+                input[0] = Float.parseFloat(row[0]);
+                input[1] = Float.parseFloat(row[1]);
+                input[2] = Float.parseFloat(row[2]);
+                input[3] = Float.parseFloat(row[3]);
+                inputs[dataRow] = new Vector(input);
+            }
+        }
+        return inputs;
+    }
+
+    public static Vector[] getTrainingTargets() throws IOException, CsvException {
+        Vector[] targets;
+        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/NeuralNetwork/src/main/java/dataset/iris.csv"))) {
+            List<String[]> dataSet = reader.readAll();
+            targets = new Vector[100];
+            for(int dataRow = 0; dataRow < 100; dataRow++) {
+                float[] target = new float[3];
+                String[] row = dataSet.get(dataRow);
+                if(row[4].equals("setosa")) {
+                    target[0] = 1f;
+                    target[1] = 0f;
+                    target[2] = 0f;
+                } else if(row[4].equals("versicolor")) {
+                    target[0] = 0f;
+                    target[1] = 1f;
+                    target[2] = 0f;
+                } else {
+                    target[0] = 0f;
+                    target[1] = 0f;
+                    target[2] = 1f;
+                }
+                targets[dataRow] = new Vector(target);
+            }
+        }
+        return targets;
+    }
+
+    public static Vector[] getTestingSet() throws IOException, CsvException {
+        Vector[] inputs;
+        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/NeuralNetwork/src/main/java/dataset/iris.csv"))) {
+            List<String[]> dataSet = reader.readAll();
+            inputs = new Vector[50];
+            for(int dataRow = 100; dataRow < dataSet.size(); dataRow++) {
+                float[] input = new float[4];
+                String[] row = dataSet.get(dataRow);
+                input[0] = Float.parseFloat(row[0]);
+                input[1] = Float.parseFloat(row[1]);
+                input[2] = Float.parseFloat(row[2]);
+                input[3] = Float.parseFloat(row[3]);
+                inputs[dataRow - 100] = new Vector(input);
+            }
+        }
+        return inputs;
+    }
+
+    public static Vector[] getTestingTargets() throws IOException, CsvException {
+        Vector[] targets;
+        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/NeuralNetwork/src/main/java/dataset/iris.csv"))) {
+            List<String[]> dataSet = reader.readAll();
+            targets = new Vector[50];
+            for(int dataRow = 100; dataRow < dataSet.size(); dataRow++) {
+                float[] target = new float[3];
+                String[] row = dataSet.get(dataRow);
+                if(row[4].equals("setosa")) {
+                    target[0] = 1f;
+                    target[1] = 0f;
+                    target[2] = 0f;
+                } else if(row[4].equals("versicolor")) {
+                    target[0] = 0f;
+                    target[1] = 1f;
+                    target[2] = 0f;
+                } else {
+                    target[0] = 0f;
+                    target[1] = 0f;
+                    target[2] = 1f;
+                }
+                targets[dataRow - 100] = new Vector(target);
+            }
+        }
+        return targets;
+    }
+
     public static Vector[] getInputs() throws IOException, CsvException {
         Vector[] inputs;
         try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/NeuralNetwork/src/main/java/dataset/iris.csv"))) {
@@ -29,8 +119,6 @@ public class TrainingData {
                 inputs[dataRow] = new Vector(input);
             }
         }
-//        normalizeData(inputs);
-//        shuffleArray(inputs);
         return inputs;
     }
 
@@ -58,7 +146,6 @@ public class TrainingData {
                 targets[dataRow] = new Vector(target);
             }
         }
-//        shuffleArray(targets);
         return targets;
     }
 
