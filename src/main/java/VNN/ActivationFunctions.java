@@ -2,19 +2,17 @@ package VNN;
 
 public class ActivationFunctions {
     public static Vector sigmoid(Vector vector) {
-        float[] resultValues = new float[vector.getValues().length];
         for(int element = 0; element < vector.getValues().length; element++) {
-            resultValues[element] = computeSigmoid(vector.getValues()[element]);
+            vector.getValues()[element] = computeSigmoid(vector.getValues()[element]);
         }
-        return new Vector(resultValues);
+        return vector;
     }
 
     public static Vector sigmoidDerivative(Vector vector) {
-        float[] resultValues = new float[vector.getValues().length];
         for(int element = 0; element < vector.getValues().length; element++) {
-            resultValues[element] = computeSigmoid(vector.getValues()[element]) * (1 - computeSigmoid(vector.getValues()[element]));
+            vector.getValues()[element] = computeSigmoid(vector.getValues()[element]) * (1 - computeSigmoid(vector.getValues()[element]));
         }
-        return new Vector(resultValues);
+        return vector;
     }
 
     private static float computeSigmoid(float x) {
