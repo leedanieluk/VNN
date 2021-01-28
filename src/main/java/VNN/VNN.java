@@ -24,15 +24,15 @@ public class VNN {
     private int inputNumber;
     private int inputSize;
 
-    public VNN(int inputs, int... layers) {
-        validateVNNInputs(inputs, layers);
+    public VNN(int inputLayer, int... layers) {
+        validateVNNInputs(inputLayer, layers);
         Matrix[] wMatrices = new Matrix[layers.length];
         Vector[] bVectors = new Vector[layers.length];
         Vector[] zVectors = new Vector[layers.length];
         Vector[] aVectors = new Vector[layers.length];
         Vector[] dVectors = new Vector[layers.length];
         for(int layer = 0; layer < layers.length; layer++) {
-            int previousLayerSize = layer > 0 ? layers[layer - 1] : inputs;
+            int previousLayerSize = layer > 0 ? layers[layer - 1] : inputLayer;
             wMatrices[layer] = buildRandomMatrix(layers[layer], previousLayerSize);
             bVectors[layer] = buildVector(layers[layer]);
             zVectors[layer] = buildVector(layers[layer]);
@@ -67,7 +67,9 @@ public class VNN {
     }
 
     public Vector predict(Vector input) {
-        return feedForward(input);
+        Vector prediction = feedForward(input);
+        System.out.println("Prediction: " + prediction.toString());
+        return prediction;
     }
 
     private Vector feedForward(Vector inputs) {
@@ -114,8 +116,8 @@ public class VNN {
         return 0.5f * (float) Math.pow(result.sumOfElements(), 2);
     }
 
-    private void validateVNNInputs(int inputs, int... layers) {
-        if(inputs < 1) {
+    private void validateVNNInputs(int inputLayer, int... layers) {
+        if(inputLayer < 1) {
             throw new IllegalArgumentException("Input size should be bigger than 0.");
         }
         if(layers.length < 1) {
