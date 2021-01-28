@@ -33,7 +33,7 @@ public class VNN {
         Vector[] dVectors = new Vector[layers.length];
         for(int layer = 0; layer < layers.length; layer++) {
             int previousLayerSize = layer > 0 ? layers[layer - 1] : inputLayer;
-            wMatrices[layer] = buildRandomMatrix(layers[layer], previousLayerSize);
+            wMatrices[layer] = buildRandomMatrix(layers[layer], previousLayerSize, 0.005f);
             bVectors[layer] = buildVector(layers[layer]);
             zVectors[layer] = buildVector(layers[layer]);
             aVectors[layer] = buildVector(layers[layer]);

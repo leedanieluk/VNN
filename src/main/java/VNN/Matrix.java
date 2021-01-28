@@ -58,11 +58,11 @@ public class Matrix {
         return result;
     }
 
-    public static Matrix buildRandomMatrix(int rows, int columns) {
+    public static Matrix buildRandomMatrix(int rows, int columns, float max) {
         float[][] values = new float[rows][columns];
         for(int row = 0; row < rows; row++) {
             for(int column = 0; column < columns; column++) {
-                values[row][column] = (float) Math.random() * 0.005f;
+                values[row][column] = (float) Math.random() * max;
             }
         }
         return new Matrix(values);
