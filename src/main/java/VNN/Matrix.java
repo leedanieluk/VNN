@@ -62,7 +62,7 @@ public class Matrix {
         float[][] values = new float[rows][columns];
         for(int row = 0; row < rows; row++) {
             for(int column = 0; column < columns; column++) {
-                values[row][column] = (float) Math.random();
+                values[row][column] = (float) Math.random() * 0.005f;
             }
         }
         return new Matrix(values);
