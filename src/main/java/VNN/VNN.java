@@ -78,7 +78,7 @@ public class VNN {
             Vector input = layer > 0 ? aVectors[layer - 1] : inputs;
             Vector zVector = wMatrix.multiply(input).add(bVectors[layer]);
             zVectors[layer] = zVector;
-            aVectors[layer] = zVector.applyElementWise(ActivationFunctions::sigmoid);
+            aVectors[layer] = zVector.copy().applyElementWise(ActivationFunctions::sigmoid);
             aVectorsCache[inputNumber][layer] = aVectors[layer].copy();
         }
         return aVectors[layersSize - 1];
