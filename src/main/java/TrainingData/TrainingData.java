@@ -16,7 +16,7 @@ public class TrainingData {
 
     public static Vector[] getTrainingSet() throws IOException, CsvException {
         Vector[] inputs;
-        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/NeuralNetwork/src/main/java/dataset/iris.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/VNN/src/main/java/TrainingData/iris.csv"))) {
             List<String[]> dataSet = reader.readAll();
             inputs = new Vector[100];
             for(int dataRow = 0; dataRow < 100; dataRow++) {
@@ -34,7 +34,7 @@ public class TrainingData {
 
     public static Vector[] getTrainingTargets() throws IOException, CsvException {
         Vector[] targets;
-        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/NeuralNetwork/src/main/java/dataset/iris.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/VNN/src/main/java/TrainingData/iris.csv"))) {
             List<String[]> dataSet = reader.readAll();
             targets = new Vector[100];
             for(int dataRow = 0; dataRow < 100; dataRow++) {
@@ -61,7 +61,7 @@ public class TrainingData {
 
     public static Vector[] getTestingSet() throws IOException, CsvException {
         Vector[] inputs;
-        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/NeuralNetwork/src/main/java/dataset/iris.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/VNN/src/main/java/TrainingData/iris.csv"))) {
             List<String[]> dataSet = reader.readAll();
             inputs = new Vector[50];
             for(int dataRow = 100; dataRow < dataSet.size(); dataRow++) {
@@ -79,7 +79,7 @@ public class TrainingData {
 
     public static Vector[] getTestingTargets() throws IOException, CsvException {
         Vector[] targets;
-        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/NeuralNetwork/src/main/java/dataset/iris.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("/Users/daniellee/Desktop/VNN/src/main/java/TrainingData/iris.csv"))) {
             List<String[]> dataSet = reader.readAll();
             targets = new Vector[50];
             for(int dataRow = 100; dataRow < dataSet.size(); dataRow++) {
