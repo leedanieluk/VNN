@@ -1,1 +1,1 @@
-A Neural Network built from first principles using vectors
+A trainable multi-layered Neural Network built from first principles using vectors
